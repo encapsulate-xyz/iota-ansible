@@ -31,7 +31,7 @@
 
 - name: Copy node configuration file
   ansible.builtin.template:
-    src: "{{ env }}/{{ type }}/config.yml.j2"
+    src: "{{ env }}/{{ type }}/validator.yaml.j2"
     dest: "{{ node_config_file_path }}"
     owner: "{{ service_identifier }}"
     group: "{{ service_identifier }}"
