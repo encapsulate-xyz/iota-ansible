@@ -1,10 +1,10 @@
 ---
-- name: Set up sui bridge node
+- name: Set up IOTA node
   hosts: all
   become: true
-  gather_facts: false
+  gather_facts: true
   vars:
-    allowed_node_types: [bridge]
+    allowed_node_types: [validator, fullnode]
   vars_files:
     - group_vars/all.yml
     - group_vars/vault.yml
@@ -16,14 +16,16 @@
       block:
         - name: Include environment setup tasks
           ansible.builtin.include_tasks: tasks/setup_environment.yml
+        - name: Include dependencies setup tasks
+          ansible.builtin.include_tasks: tasks/setup_dependencies.yml
 
   tasks:
-    - name: Setup environment and run bridge role
+    - name: Run node role
       when: type in allowed_node_types
       block:
         - name: Include common handlers
           ansible.builtin.include_role:
             name: common
-        - name: Include bridge role
+        - name: Include node role
           ansible.builtin.include_role:
-            name: bridge
+            name: node
