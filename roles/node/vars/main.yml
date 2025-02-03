@@ -1,0 +1,26 @@
+---
+# maintains file name, binary names, and anything which is not a diretcory or path
+
+# config file names
+node_config_file_name: validator.yaml
+node_genesis_file_name: genesis.blob
+
+# keys file names
+node_protocol_key_file_name: protocol.key
+node_authority_key_file_name: authority.key
+node_network_key_file_name: network.key
+
+# binary names
+node_binaries:
+  iota_default:
+    default_binary_name: "iota-node"
+    dest_binary_name: "{{ service_identifier }}"
+  iota_cli:
+    default_binary_name: "iota"
+    dest_binary_name: "iota-cli"
+  iota_tool:
+    default_binary_name: "iota-tool"
+    dest_binary_name: "iota-tool"
+
+# Environment file names
+node_environment_general_file_name: "{{ service_identifier }}.env"

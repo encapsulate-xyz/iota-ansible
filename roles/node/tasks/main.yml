@@ -1,0 +1,93 @@
+---
+- name: Include the ufw vars file
+  ansible.builtin.include_vars:
+    file: vars/ufw_rules.yml
+
+- name: Apply UFW rules
+  ansible.builtin.include_tasks: tasks/apply_ufw_rules.yml
+  loop: "{{ node_ufw_rules[type] }}"
+
+- name: Include user creation task
+  ansible.builtin.include_tasks: tasks/create_user_and_directories.yml
+  vars:
+    home: "{{ node_home_dir }}"
+    directories: "{{ node_directories }}"
+    log_file_path: "{{ node_log_file_path }}"
+
+- name: Install IOTA
+  ansible.builtin.include_tasks: tasks/extract_binary.yml
+  vars:
+    arch_details: "{{ ansible_system | lower }}-{{ ansible_architecture }}"
+    build_suffix_url: "{{ iota[type].version }}/iota-{{ iota[type].version }}"
+    source_url: "{{ iota[type].source_url }}"
+    suffix_url: "{{ build_suffix_url }}-{{ arch_details }}.{{ iota.file_extension }}"
+    path_mapping:
+      - extracted_path: "{{ node_binaries.iota_default.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ node_binaries.iota_default.dest_binary_name }}"
+      - extracted_path: "{{ node_binaries.iota_cli.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ node_binaries.iota_cli.dest_binary_name }}"
+      - extracted_path: "{{ node_binaries.iota_tool.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ node_binaries.iota_tool.dest_binary_name }}"
+
+- name: Copy node configuration file
+  ansible.builtin.template:
+    src: "{{ env }}/{{ type }}/validator.yaml.j2"
+    dest: "{{ node_config_file_path }}"
+    owner: "{{ service_identifier }}"
+    group: "{{ service_identifier }}"
+    mode: "0644"
+  notify:
+    - Restart service
+
+- name: Copy node genesis blob file
+  ansible.builtin.copy:
+    src: "{{ env }}/genesis.blob"
+    dest: "{{ node_genesis_file_path }}"
+    owner: "{{ service_identifier }}"
+    group: "{{ service_identifier }}"
+    mode: "0644"
+  notify:
+    - Restart service
+
+- name: Fetch secrets from HCP Vault and save to files
+  when: fetch_validator_keys | default(false) | bool
+  block:
+    - name: Fetch protocol key and save
+      ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml
+      vars:
+        vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ node_protocol_key_file_name }}"
+        secret_destination_path: "{{ node_protocol_key_path }}"
+        secret_type: key
+
+    - name: Fetch authority key and save
+      ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml
+      vars:
+        vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ node_authority_key_file_name }}"
+        secret_destination_path: "{{ node_authority_key_path }}"
+        secret_type: key
+
+    - name: Fetch network key and save
+      ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml
+      vars:
+        vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ node_network_key_file_name }}"
+        secret_destination_path: "{{ node_network_key_path }}"
+        secret_type: key
+
+- name: Copy general env file
+  ansible.builtin.template:
+    src: "{{ env }}/general.env.j2"
+    dest: "{{ node_environment_general_file_path }}"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Copy systemd service file
+  ansible.builtin.template:
+    src: "{{ env }}/systemd.service.j2"
+    dest: /etc/systemd/system/{{ service_identifier }}.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload service
+    - Restart service

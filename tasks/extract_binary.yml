@@ -18,13 +18,16 @@
 
 - name: Copy the binary file
   ansible.builtin.copy:
-    src: "{{ tmp_dir }}/{{ service_identifier }}/{{ extracted_binary_path }}"
-    dest: "{{ binary_dest_path }}"
+    src: "{{ tmp_dir }}/{{ service_identifier }}/{{ item.extracted_path }}"
+    dest: "{{ item.dest_path }}"
     remote_src: true
     owner: root
     group: root
     force: true
     mode: "0755"
+  with_items: "{{ path_mapping }}"
+  notify:
+    - Restart service
 
 - name: Clean up the temporary files in /tmp
   ansible.builtin.file:

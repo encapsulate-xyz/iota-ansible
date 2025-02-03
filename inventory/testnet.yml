@@ -4,11 +4,9 @@ all:
   vars:
     env: testnet
   children:
-    sui:
+    iota:
       hosts:
-        bridge.sui.mainnet.encapsulate.xyz:
-          type: bridge
-        validator.sui.mainnet.encapsulate.xyz:
+        validator.iota.testnet.encapsulate.xyz:
           type: validator
-        fullnode.sui.mainnet.encapsulate.xyz:
+        fullnode.iota.testnet.encapsulate.xyz:
           type: fullnode

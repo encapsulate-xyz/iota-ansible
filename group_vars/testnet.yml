@@ -1,9 +1,13 @@
 ---
 # maintains versions and can overwrite all.yml
-sui:
+iota:
   validator:
-    version: 218db6e510d2d7fee0a6118fa87fc14baeabbd64
+    version: v0.8.1-rc
+    external_address: validator.iota.testnet.encapsulate.xyz
   fullnode:
-    version: 218db6e510d2d7fee0a6118fa87fc14baeabbd64
-  bridge:
-    version: dce2e0683c2472a64858d13dc77b82448b4139f1
+    version: v0.8.1-rc
+  unsigned_bucket_name: iota-testnet-formal
+  aws_snapshot_endpoint: https://formal-snapshot.testnet.iota.cafe
+  archive_bucket_name: iota-testnet-archive
+  aws_archive_endpoint: https://archive.testnet.iota.cafe
+

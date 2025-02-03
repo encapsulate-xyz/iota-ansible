@@ -1,0 +1,53 @@
+---
+- name: Stop service
+  ansible.builtin.systemd:
+    name: "{{ service_identifier }}"
+    state: stopped
+
+- name: Delete data folder directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ snapshot_sync_authorities_data_dir }}"
+    - "{{ snapshot_sync_consensus_data_dir }}"
+
+- name: Create data directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ service_identifier }}"
+    group: "{{ service_identifier }}"
+    mode: "0755"
+  loop:
+    - "{{ snapshot_sync_authorities_data_dir }}"
+    - "{{ snapshot_sync_consensus_data_dir }}"
+
+- name: Download snapshot using iota-tool
+  ansible.builtin.command:
+    cmd: >
+      {{ snapshot_sync_bin_dir }}/{{ snapshot_sync_tool_default_binary_name }} download-formal-snapshot --latest
+      --genesis {{ snapshot_sync_genesis_file_path }}
+      --network {{ env }}
+      --path {{ snapshot_sync_authorities_data_dir }}
+      --num-parallel-downloads 50
+      --no-sign-request
+  environment:
+    MAINNET_FORMAL_UNSIGNED_BUCKET: "{{ iota.unsigned_bucket_name }}"
+    AWS_SNAPSHOT_ENDPOINT: "{{ iota.aws_snapshot_endpoint }}"
+    FORMAL_SNAPSHOT_ARCHIVE_BUCKET: "{{ iota.archive_bucket_name }}"
+    AWS_ARCHIVE_ENDPOINT: "{{ iota.aws_archive_endpoint }}"
+    AWS_ARCHIVE_VIRTUAL_HOSTED_REQUESTS: true
+  changed_when: false
+
+- name: Set ownership of authorities data directory
+  ansible.builtin.file:
+    path: "{{ snapshot_sync_authorities_data_dir }}"
+    owner: "{{ service_identifier }}"
+    group: "{{ service_identifier }}"
+    recurse: true
+
+- name: Restart service
+  ansible.builtin.systemd:
+    name: "{{ service_identifier }}"
+    state: restarted
