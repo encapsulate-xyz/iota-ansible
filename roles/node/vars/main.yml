@@ -9,7 +9,6 @@ node_genesis_file_name: genesis.blob
 node_protocol_key_file_name: protocol.key
 node_authority_key_file_name: authority.key
 node_network_key_file_name: network.key
-node_account_key_file_name: account.key
 
 # binary names
 node_binaries:

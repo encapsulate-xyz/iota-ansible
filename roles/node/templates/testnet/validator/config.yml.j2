@@ -5,8 +5,6 @@ protocol-key-pair:
   path: {{ node_protocol_key_path }}
 network-key-pair:
   path: {{ node_network_key_path }}
-account-key-pair:
-  path: {{ node_account_key_path }}
 db-path: {{ node_authorities_data_dir }}
 network-address: /ip4/0.0.0.0/tcp/{{ iota.validator.ports.network_address_port }}/http
 metrics-address: "0.0.0.0:{{ iota.validator.ports.metrics_port }}"
