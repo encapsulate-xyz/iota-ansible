@@ -31,13 +31,8 @@
       --network {{ env }}
       --path {{ snapshot_sync_authorities_data_dir }}
       --num-parallel-downloads 50
-      --no-sign-request
-  environment:
-    MAINNET_FORMAL_UNSIGNED_BUCKET: "{{ iota.unsigned_bucket_name }}"
-    AWS_SNAPSHOT_ENDPOINT: "{{ iota.aws_snapshot_endpoint }}"
-    FORMAL_SNAPSHOT_ARCHIVE_BUCKET: "{{ iota.archive_bucket_name }}"
-    AWS_ARCHIVE_ENDPOINT: "{{ iota.aws_archive_endpoint }}"
-    AWS_ARCHIVE_VIRTUAL_HOSTED_REQUESTS: true
+      --no-sign-request   
+  environment: "{{ snapshot_sync_env_vars }}"
   changed_when: false
 
 - name: Set ownership of authorities data directory
