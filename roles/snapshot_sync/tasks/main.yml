@@ -31,7 +31,7 @@
       --network {{ env }}
       --path {{ snapshot_sync_authorities_data_dir }}
       --num-parallel-downloads 50
-      --no-sign-request   
+      --no-sign-request
   environment: "{{ snapshot_sync_env_vars }}"
   changed_when: false
 
