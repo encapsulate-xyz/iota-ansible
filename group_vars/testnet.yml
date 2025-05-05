@@ -4,9 +4,6 @@ iota:
   validator:
     version: v0.12.0-rc
     external_address: validator.iota.testnet.encapsulate.xyz
-  fullnode:
+  ssfn:
     version: v0.12.0-rc
-  unsigned_bucket_name: iota-testnet-formal
-  aws_snapshot_endpoint: https://formal-snapshot.testnet.iota.cafe
-  archive_bucket_name: iota-testnet-archive
-  aws_archive_endpoint: https://archive.testnet.iota.cafe
+    external_address: ssfn.iota.testnet.encapsulate.xyz
