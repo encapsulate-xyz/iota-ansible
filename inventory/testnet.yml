@@ -8,5 +8,5 @@ all:
       hosts:
         validator.iota.testnet.encapsulate.xyz:
           type: validator
-        fullnode.iota.testnet.encapsulate.xyz:
-          type: fullnode
+        ssfn.iota.testnet.encapsulate.xyz:
+          type: ssfn
