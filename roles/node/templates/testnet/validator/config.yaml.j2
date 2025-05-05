@@ -1,0 +1,102 @@
+---
+# Key pairs
+authority-key-pair:
+  path: {{ node_authority_key_path }}
+protocol-key-pair:
+  path: {{ node_protocol_key_path }}
+network-key-pair:
+  path: {{ node_network_key_path }}
+
+# Database Configuration
+db-path: {{ node_authorities_data_dir }}
+consensus-config:
+  db-path: {{ node_consensus_data_dir }}
+  internal-worker-address: null
+
+# Genesis Configuration
+genesis:
+  genesis-file-location: {{ node_genesis_file_path }}
+
+# Network Configuration
+network-address: /ip4/0.0.0.0/tcp/{{ iota.validator.ports.network_address_port }}/http
+admin-interface-address: "127.0.0.1:{{ iota.validator.ports.admin_interface_port }}"
+enable-event-processing: false
+p2p-config:
+  seed-peers:
+    - address: /dns/{{ iota.fullnode.external_address }}/udp/{{ iota.fullnode.ports.p2p_port }}
+      peer-id: ddc19c8d579061a7ca14e17cd7cfcb6593dcffa9ee3b717b3bb939ceb6d2d820
+  listen-address: "0.0.0.0:{{ iota.validator.ports.p2p_port }}"
+  external-address: /dns/{{ iota.validator.external_address }}/udp/{{ iota.validator.ports.p2p_port }}
+  anemo-config:
+    max-concurrent-connections: 0
+
+# Pruning Configuration
+authority-store-pruning-config:
+  num-latest-epoch-dbs-to-retain: 3
+  epoch-db-pruning-period-secs: 3600
+  num-epochs-to-retain: 1
+  max-checkpoints-in-batch: 5
+  max-transactions-in-batch: 1000
+
+# Resource Optimization
+end-of-epoch-broadcast-channel-capacity: 128
+checkpoint-executor-config:
+  checkpoint-execution-max-concurrency: 200
+  local-execution-timeout-sec: 10
+db-checkpoint-config:
+  perform-db-checkpoints-at-epoch-end: false
+indirect-objects-threshold: 18446744073709551615
+
+# Metrics Configuration
+metrics:
+  push-interval-seconds: 60
+  push-url: https://metrics-proxy.testnet.iota.cafe:8443/publish/metrics
+metrics-address: "0.0.0.0:{{ iota.validator.ports.metrics_port }}"
+
+# State Sync Archive Fallback
+state-archive-read-config:
+  - object-store-config:
+      object-store: "S3"
+      aws-endpoint: "https://archive.testnet.iota.cafe"
+      aws-virtual-hosted-style-request: true
+      object-store-connection-limit: 20
+      no-sign-request: true
+    concurrency: 5
+    use-for-pruning-watermark: false
+
+# Policy Config from : https://docs.iota.org/operator/activate_DoS_protection_for_validators#recommended-production-settings
+policy-config:
+  # Use SocketAddr for direct connections or x-forwarded-for for proxied setups
+  client-id-source: SocketAddr
+  
+  # How long to block direct client IPs (in seconds
+  connection-blocklist-ttl-sec: 300  # Block for 5 minutes
+
+  # How long to block proxied client IPs (in seconds)
+  proxy-blocklist-ttl-sec: 300  # Block for 5 minutes
+  
+  # Policy for handling spam traffic
+  spam-policy-type:
+    freq-threshold:
+      # Adjust these thresholds based on your expected legitimate traffic
+      client-threshold: 50  # Requests per second threshold for direct clients
+      proxied-client-threshold: 10  # Requests per second threshold for proxied clients
+      window-size-secs: 30  # Time window for rate calculation
+      update-interval-secs: 5   # Update interval for rate calculation
+  
+  # Policy for handling error traffic
+  error-policy-type:
+    freq-threshold:
+      client-threshold: 20
+      proxied-client-threshold: 5
+      window-size-secs: 30
+      update-interval-secs: 5
+  
+  # Channel capacity for internal message passing
+  channel-capacity: 100
+
+  # Sampling rate for spam detection (0.0 to 1.0)
+  spam-sample-rate: 0.5  # Sample half of all requests
+
+  # Whether to run in dry-run mode (log but don't block
+  dry-run: false  # Ensure this is false for actual protection
