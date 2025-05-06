@@ -11,53 +11,46 @@ network-key-pair:
 db-path: {{ node_authorities_data_dir }}
 consensus-config:
   db-path: {{ node_consensus_data_dir }}
-  internal-worker-address: null
 
 # Genesis Configuration
 genesis:
   genesis-file-location: {{ node_genesis_file_path }}
+migration-tx-data-path: {{ node_migration_file_path }}
 
 # Network Configuration
 network-address: /ip4/0.0.0.0/tcp/{{ iota.validator.ports.network_address_port }}/http
 admin-interface-address: "127.0.0.1:{{ iota.validator.ports.admin_interface_port }}"
-enable-event-processing: false
 p2p-config:
-  seed-peers:
-    - address: /dns/{{ iota.ssfn.external_address }}/udp/{{ iota.ssfn.ports.p2p_port }}
-      peer-id: {{ iota.ssfn.peer_id }}
   listen-address: "0.0.0.0:{{ iota.validator.ports.p2p_port }}"
   external-address: /dns/{{ iota.validator.external_address }}/udp/{{ iota.validator.ports.p2p_port }}
   anemo-config:
     max-concurrent-connections: 0
+  seed-peers:
+    - address: /dns/{{ iota.ssfn.external_address }}/udp/{{ iota.ssfn.ports.p2p_port }}
+      peer-id: {{ iota.ssfn.peer_id }}
 
 # Pruning Configuration
 authority-store-pruning-config:
-  num-latest-epoch-dbs-to-retain: 3
-  epoch-db-pruning-period-secs: 3600
-  num-epochs-to-retain: 1
-  max-checkpoints-in-batch: 5
-  max-transactions-in-batch: 1000
+  num-epochs-to-retain: 0
+  num-epochs-to-retain-for-checkpoints: 2
 
 # Resource Optimization
-end-of-epoch-broadcast-channel-capacity: 128
+enable-index-processing: false
 checkpoint-executor-config:
-  checkpoint-execution-max-concurrency: 200
   local-execution-timeout-sec: 10
-db-checkpoint-config:
-  perform-db-checkpoints-at-epoch-end: false
 indirect-objects-threshold: 18446744073709551615
 
 # Metrics Configuration
 metrics:
   push-interval-seconds: 60
-  push-url: https://metrics-proxy.testnet.iota.cafe:8443/publish/metrics
+  push-url: https://metrics-proxy.mainnet.iota.cafe:8443/publish/metrics
 metrics-address: "0.0.0.0:{{ iota.validator.ports.metrics_port }}"
 
 # State Sync Archive Fallback
 state-archive-read-config:
   - object-store-config:
       object-store: "S3"
-      aws-endpoint: "https://archive.testnet.iota.cafe"
+      aws-endpoint: "https://archive.mainnet.iota.cafe"
       aws-virtual-hosted-style-request: true
       object-store-connection-limit: 20
       no-sign-request: true

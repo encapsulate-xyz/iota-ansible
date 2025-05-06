@@ -37,44 +37,14 @@ node_ufw_rules:
       from: "{{ monitor_server_dns }}"
       comment: metrics_port
 
-  fullnode:
-    - port: "{{ iota.fullnode.ports.p2p_port }}"
+  ssfn:
+    - port: "{{ iota.ssfn.ports.p2p_port }}"
       proto: udp
       rule: allow
       from: any
       comment: p2p_port
 
-    - port: "{{ iota.fullnode.ports.network_address_port }}"
-      proto: tcp
-      rule: allow
-      from: any
-      comment: protocol_transaction_interface_port
-
-    - port: "{{ iota.fullnode.ports.narwhal_primary_interface_port }}"
-      proto: tcp
-      rule: allow
-      from: any
-      comment: consensus_interface_port
-
-    - port: "{{ iota.fullnode.ports.narwhal_primary_interface_port }}"
-      proto: udp
-      rule: allow
-      from: any
-      comment: narwhal_primary_interface_port
-
-    - port: "{{ iota.fullnode.ports.narwhal_worker_interface_port }}"
-      proto: udp
-      rule: allow
-      from: any
-      comment: narwhal_worker_interface_port
-
-    - port: "{{ iota.fullnode.ports.json_rpc_port }}"
-      proto: tcp
-      rule: allow
-      from: any
-      comment: json_rpc_port
-
-    - port: "{{ iota.fullnode.ports.metrics_port }}"
+    - port: "{{ iota.ssfn.ports.metrics_port }}"
       proto: tcp
       rule: allow
       from: "{{ monitor_server_dns }}"

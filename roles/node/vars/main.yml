@@ -2,8 +2,9 @@
 # maintains file name, binary names, and anything which is not a diretcory or path
 
 # config file names
-node_config_file_name: validator.yaml
+node_config_file_name: "{{ type }}.yaml"
 node_genesis_file_name: genesis.blob
+node_migration_file_name: migration.blob
 
 # keys file names
 node_protocol_key_file_name: protocol.key
