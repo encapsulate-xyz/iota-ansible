@@ -26,8 +26,8 @@ p2p-config:
   anemo-config:
     max-concurrent-connections: 0
   seed-peers:
-    - address: /dns/{{ iota.fullnode.external_address }}/udp/{{ iota.fullnode.ports.p2p_port }}
-      peer-id: 3ac860e634b72486a6700a4259d6f8f2a62184a00073cbd242fbf5c7e6507698
+    - address: /dns/{{ iota.ssfn.external_address }}/udp/{{ iota.ssfn.ports.p2p_port }}
+      peer-id: {{ iota.ssfn.peer_id }}
 
 # Pruning Configuration
 authority-store-pruning-config:

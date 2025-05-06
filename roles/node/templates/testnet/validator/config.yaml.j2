@@ -23,8 +23,8 @@ admin-interface-address: "127.0.0.1:{{ iota.validator.ports.admin_interface_port
 enable-event-processing: false
 p2p-config:
   seed-peers:
-    - address: /dns/{{ iota.fullnode.external_address }}/udp/{{ iota.fullnode.ports.p2p_port }}
-      peer-id: ddc19c8d579061a7ca14e17cd7cfcb6593dcffa9ee3b717b3bb939ceb6d2d820
+    - address: /dns/{{ iota.ssfn.external_address }}/udp/{{ iota.ssfn.ports.p2p_port }}
+      peer-id: {{ iota.ssfn.peer_id }}
   listen-address: "0.0.0.0:{{ iota.validator.ports.p2p_port }}"
   external-address: /dns/{{ iota.validator.external_address }}/udp/{{ iota.validator.ports.p2p_port }}
   anemo-config:

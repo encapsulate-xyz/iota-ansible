@@ -18,7 +18,7 @@ p2p-config:
   external-address: /dns/{{ iota.ssfn.external_address }}/udp/{{ iota.ssfn.ports.p2p_port }}
   seed-peers:
     - address: /dns/{{ iota.validator.external_address }}/udp/{{ iota.validator.ports.p2p_port }}
-      peer-id: 9274d644e169c89b186458bb6dd86d44ba1444158d7036ff46fdfebc009eb1a8
+      peer-id: {{ iota.validator.peer_id }}
     - address: /dns/access-0.r.testnet.iota.cafe/udp/8084
       peer-id: 46064108d0b689ed89d1f44153e532bb101ce8f8ca3a3d01ab991d4dea122cfc
     - address: /dns/access-1.r.testnet.iota.cafe/udp/8084
