@@ -13,23 +13,11 @@ node_ufw_rules:
       from: any
       comment: network_address_port
 
-    - port: "{{ iota.validator.ports.narwhal_primary_interface_port }}"
+    - port: "{{ iota.validator.ports.consensus_address_port }}"
       proto: tcp
       rule: allow
       from: any
-      comment: consensus_interface_port
-
-    - port: "{{ iota.validator.ports.narwhal_primary_interface_port }}"
-      proto: udp
-      rule: allow
-      from: any
-      comment: narwhal_primary_interface_port
-
-    - port: "{{ iota.validator.ports.narwhal_worker_interface_port }}"
-      proto: udp
-      rule: allow
-      from: any
-      comment: narwhal_worker_interface_port
+      comment: consensus_address_port
 
     - port: "{{ iota.validator.ports.metrics_port }}"
       proto: tcp
