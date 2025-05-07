@@ -59,8 +59,8 @@ state-archive-read-config:
 
 # Policy Config from : https://docs.iota.org/operator/activate_DoS_protection_for_validators#recommended-production-settings
 policy-config:
-  # Use SocketAddr for direct connections or x-forwarded-for for proxied setups
-  client-id-source: SocketAddr
+  # Use socket-addr for direct connections or x-forwarded-for for proxied setups
+  client-id-source: socket-addr
   
   # How long to block direct client IPs (in seconds
   connection-blocklist-ttl-sec: 300  # Block for 5 minutes
@@ -70,7 +70,7 @@ policy-config:
   
   # Policy for handling spam traffic
   spam-policy-type:
-    freq-threshold:
+    FreqThreshold:
       # Adjust these thresholds based on your expected legitimate traffic
       client-threshold: 50  # Requests per second threshold for direct clients
       proxied-client-threshold: 10  # Requests per second threshold for proxied clients
@@ -79,7 +79,7 @@ policy-config:
   
   # Policy for handling error traffic
   error-policy-type:
-    freq-threshold:
+    FreqThreshold:
       client-threshold: 20
       proxied-client-threshold: 5
       window-size-secs: 30
