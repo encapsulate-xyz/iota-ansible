@@ -22,7 +22,6 @@
       - "Operating System: {{ ansible_system | lower }}"
       - "System Architecture: {{ system_architecture }}"
 
-
 - name: Set all port variables dynamically
   ansible.builtin.set_fact:
     admin_interface_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.admin_interface }}"
@@ -32,6 +31,11 @@
     json_rpc_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.json_rpc }}"
     metrics_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.metrics }}"
   when: type == "validator" or type == "fullnode"
+
+- name: Set p2p port for validator node
+  ansible.builtin.set_fact:
+    validator_p2p_port: "{{ iota.validator.ports.prefix ~ iota.validator.ports.suffix.p2p }}"
+  when: type == "ssfn"
 
 - name: Display all port variables
   ansible.builtin.debug:

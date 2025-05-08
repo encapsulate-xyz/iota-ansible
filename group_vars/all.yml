@@ -28,7 +28,7 @@ iota:
         consensus_address: 81
         p2p: 84
         json_rpc: 01
-        metrics: 84
+        metrics: 85
   ssfn:
     source_url: https://github.com/iotaledger/iota/releases/download
     ports:
