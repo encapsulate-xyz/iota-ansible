@@ -28,7 +28,6 @@
         dest_path: "{{ node_bin_dir }}/{{ node_binaries.iota_cli.dest_binary_name }}"
       - extracted_path: "{{ node_binaries.iota_tool.default_binary_name }}"
         dest_path: "{{ node_bin_dir }}/{{ node_binaries.iota_tool.dest_binary_name }}"
-  when: fetch_binaries | default(false) | bool
 
 - name: Copy node configuration file
   ansible.builtin.template:
