@@ -1,37 +1,25 @@
 ---
 node_ufw_rules:
   validator:
-    - port: "{{ iota.validator.ports.p2p_port }}"
+    - port: "{{ p2p_port }}"
       proto: udp
       rule: allow
       from: any
       comment: p2p_port
 
-    - port: "{{ iota.validator.ports.network_address_port }}"
+    - port: "{{ network_port }}"
       proto: tcp
       rule: allow
       from: any
-      comment: network_address_port
+      comment: network_port
 
-    - port: "{{ iota.validator.ports.narwhal_primary_interface_port }}"
+    - port: "{{ consensus_port }}"
       proto: tcp
       rule: allow
       from: any
-      comment: consensus_interface_port
+      comment: consensus_port
 
-    - port: "{{ iota.validator.ports.narwhal_primary_interface_port }}"
-      proto: udp
-      rule: allow
-      from: any
-      comment: narwhal_primary_interface_port
-
-    - port: "{{ iota.validator.ports.narwhal_worker_interface_port }}"
-      proto: udp
-      rule: allow
-      from: any
-      comment: narwhal_worker_interface_port
-
-    - port: "{{ iota.validator.ports.metrics_port }}"
+    - port: "{{ metrics_port }}"
       proto: tcp
       rule: allow
       from: "{{ monitor_server_dns }}"
