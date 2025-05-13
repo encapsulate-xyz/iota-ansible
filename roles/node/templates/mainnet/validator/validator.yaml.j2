@@ -18,8 +18,8 @@ genesis:
 migration-tx-data-path: {{ node_migration_file_path }}
 
 # Network Configuration
-network-address: /ip4/0.0.0.0/tcp/{{ network_address_port }}/http
-admin-interface-address: "127.0.0.1:{{ admin_interface_port }}"
+network-address: /ip4/0.0.0.0/tcp/{{ network_port }}/http
+admin-interface-address: "127.0.0.1:{{ admin_port }}"
 p2p-config:
   listen-address: "0.0.0.0:{{ p2p_port }}"
   external-address: /dns/{{ iota.validator.external_address }}/udp/{{ p2p_port }}

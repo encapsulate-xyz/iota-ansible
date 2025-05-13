@@ -23,16 +23,16 @@ iota:
     ports:
       prefix: 81
       suffix:
-        admin_interface: 37
-        network_address: 80
-        consensus_address: 81
+        admin: 37
+        network: 80
+        consensus: 81
         p2p: 84
-        json_rpc: 01
-        metrics: 85
+        rpc: 90
+        metrics: 91
   ssfn:
     source_url: https://github.com/iotaledger/iota/releases/download
     ports:
-      admin_interface_port: 1338
+      admin_port: 1338
       p2p_port: 8094
-      json_rpc_port: 9001
+      rpc_port: 9001
       metrics_port: 9185

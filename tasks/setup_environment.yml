@@ -24,11 +24,11 @@
 
 - name: Set all port variables dynamically
   ansible.builtin.set_fact:
-    admin_interface_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.admin_interface }}"
-    network_address_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.network_address }}"
-    consensus_address_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.consensus_address }}"
+    admin_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.admin }}"
+    network_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.network }}"
+    consensus_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.consensus }}"
     p2p_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.p2p }}"
-    json_rpc_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.json_rpc }}"
+    rpc_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.rpc }}"
     metrics_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.metrics }}"
   when: type == "validator" or type == "fullnode"
 
@@ -41,11 +41,11 @@
   ansible.builtin.debug:
     msg:
       - "P2P Port: {{ p2p_port }}"
-      - "Json RPC Port: {{ json_rpc_port }}"
+      - "RPC Port: {{ rpc_port }}"
       - "Metrics Port: {{ metrics_port }}"
-      - "Consensus Port: {{ consensus_address_port }}"
-      - "Network Port: {{ network_address_port }}"
-      - "Admin Port: {{ admin_interface_port }}"
+      - "Consensus Port: {{ consensus_port }}"
+      - "Network Port: {{ network_port }}"
+      - "Admin Port: {{ admin_port }}"
   when: type == "validator" or type == "fullnode"
 
 - name: Confirm deployment details

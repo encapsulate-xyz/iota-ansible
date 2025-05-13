@@ -18,8 +18,8 @@ genesis:
   genesis-file-location: {{ node_genesis_file_path }}
 
 # Network Configuration
-network-address: /ip4/0.0.0.0/tcp/{{ network_address_port }}/http
-admin-interface-address: "127.0.0.1:{{ admin_interface_port }}"
+network-address: /ip4/0.0.0.0/tcp/{{ network_port }}/http
+admin-interface-address: "127.0.0.1:{{ admin_port }}"
 enable-event-processing: false
 p2p-config:
   seed-peers:
