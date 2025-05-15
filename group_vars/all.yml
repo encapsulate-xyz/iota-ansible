@@ -20,6 +20,7 @@ iota:
   file_extension: tgz
   validator:
     source_url: https://github.com/iotaledger/iota/releases/download
+    secret_source_url: https://dbfiles.mainnet.iota.cafe
     ports:
       prefix: 81
       suffix:

@@ -28,7 +28,19 @@
         dest_path: "{{ node_bin_dir }}/{{ node_binaries.iota_cli.dest_binary_name }}"
       - extracted_path: "{{ node_binaries.iota_tool.default_binary_name }}"
         dest_path: "{{ node_bin_dir }}/{{ node_binaries.iota_tool.dest_binary_name }}"
-  when: fetch_binaries | default(false) | bool
+  when: not (fetch_secret_binaries | default(false) | bool)
+
+- name: Include fetch secret binaries task
+  ansible.builtin.include_tasks: fetch_secret_binaries.yml
+  when: fetch_secret_binaries | default(false) | bool
+  vars:
+    path_mapping:
+      - extracted_path: "{{ node_binaries.iota_default.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ node_binaries.iota_default.dest_binary_name }}"
+      - extracted_path: "{{ node_binaries.iota_cli.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ node_binaries.iota_cli.dest_binary_name }}"
+      - extracted_path: "{{ node_binaries.iota_tool.default_binary_name }}"
+        dest_path: "{{ node_bin_dir }}/{{ node_binaries.iota_tool.dest_binary_name }}"
 
 - name: Copy node configuration file
   ansible.builtin.template:
