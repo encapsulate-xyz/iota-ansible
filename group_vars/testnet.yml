@@ -2,10 +2,10 @@
 # maintains versions and can overwrite all.yml
 iota:
   validator:
-    version: v1.1.0
+    version: v1.2.1-rc
     external_address: validator.iota.testnet.encapsulate.xyz
     peer_id: 9274d644e169c89b186458bb6dd86d44ba1444158d7036ff46fdfebc009eb1a8
   ssfn:
-    version: v1.1.0
+    version: v1.2.1-rc
     external_address: ssfn.iota.testnet.encapsulate.xyz
     peer_id: ddc19c8d579061a7ca14e17cd7cfcb6593dcffa9ee3b717b3bb939ceb6d2d820
