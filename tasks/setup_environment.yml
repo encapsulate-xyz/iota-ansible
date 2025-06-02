@@ -24,13 +24,12 @@
 
 - name: Set all port variables dynamically
   ansible.builtin.set_fact:
-    admin_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.admin }}"
-    network_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.network }}"
-    consensus_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.consensus }}"
-    p2p_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.p2p }}"
-    rpc_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.rpc }}"
-    metrics_port: "{{ vars[project][type].ports.prefix ~ vars[project][type].ports.suffix.metrics }}"
-  when: type == "validator" or type == "fullnode"
+    admin_port: "{{ iota.validator.ports.prefix ~ iota.validator.ports.suffix.admin }}"
+    network_port: "{{ iota.validator.ports.prefix ~ iota.validator.ports.suffix.network }}"
+    consensus_port: "{{ iota.validator.ports.prefix ~ iota.validator.ports.suffix.consensus }}"
+    p2p_port: "{{ iota.validator.ports.prefix ~ iota.validator.ports.suffix.p2p }}"
+    rpc_port: "{{ iota.validator.ports.prefix ~ iota.validator.ports.suffix.rpc }}"
+    metrics_port: "{{ iota.validator.ports.prefix ~ iota.validator.ports.suffix.metrics }}"
 
 - name: Set p2p port for validator node
   ansible.builtin.set_fact:
@@ -46,7 +45,6 @@
       - "Consensus Port: {{ consensus_port }}"
       - "Network Port: {{ network_port }}"
       - "Admin Port: {{ admin_port }}"
-  when: type == "validator" or type == "fullnode"
 
 - name: Confirm deployment details
   ansible.builtin.pause:
