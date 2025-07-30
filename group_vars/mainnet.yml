@@ -2,11 +2,11 @@
 # maintains versions and can overwrite all.yml
 iota:
   validator:
-    version: v1.2.3
+    version: v1.3.1
     external_address: validator.iota.mainnet.encapsulate.xyz
     peer_id: 345fb15ce1ba0bcd74b3b32d55bf9d3204b63010b88c11aa680165dcf3f2a180
   ssfn:
-    version: v1.2.3
+    version: v1.3.1
     external_address: ssfn.iota.mainnet.encapsulate.xyz
     peer_id: 3ac860e634b72486a6700a4259d6f8f2a62184a00073cbd242fbf5c7e6507698
   migration_blob_url: https://dbfiles.mainnet.iota.cafe/migration.blob
