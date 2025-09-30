@@ -8,5 +8,7 @@ all:
       hosts:
         validator.iota.mainnet.encapsulate.xyz:
           type: validator
+        139.84.143.106:
+          type: validator
         ssfn.iota.mainnet.encapsulate.xyz:
           type: ssfn
