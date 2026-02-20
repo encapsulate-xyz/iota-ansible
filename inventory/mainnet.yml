@@ -6,9 +6,7 @@ all:
   children:
     iota:
       hosts:
-        validator.iota.mainnet.encapsulate.xyz:
-          type: validator
-        new.validator.iota.mainnet.encapsulate.xyz:
+        ts.validator.iota.mainnet.encapsulate.xyz:
           type: validator
         ssfn.iota.mainnet.encapsulate.xyz:
           type: ssfn
