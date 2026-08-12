@@ -48,12 +48,6 @@ metrics:
 metrics-address: "0.0.0.0:{{ iota.ssfn.ports.metrics_port }}"
 
 # State Sync Archive Fallback
-state-archive-read-config:
-  - object-store-config:
-      object-store: "S3"
-      aws-endpoint: "https://archive.mainnet.iota.cafe"
-      aws-virtual-hosted-style-request: true
-      object-store-connection-limit: 20
-      no-sign-request: true
-    concurrency: 5
-    use-for-pruning-watermark: false
+checkpoint-archive-config:
+  url: "https://checkpoints.mainnet.iota.cafe/ingestion/historical"
+  download-concurrency: 5
