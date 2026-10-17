@@ -9,6 +9,10 @@ ExecStart={{ node_bin_dir }}/{{ service_identifier }} --config-path {{ node_conf
 Restart=always
 RestartSec=4
 LimitNOFILE=65536
+# Soft limit: kernel starts reclaiming/throttling the service above this
+MemoryHigh=45G
+# Hard limit: if exceeded, the OOM killer kills ONLY this service
+MemoryMax=64G
 StandardOutput=append:{{ node_log_file_path }}
 StandardError=inherit
 
