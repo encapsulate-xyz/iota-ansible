@@ -1,0 +1,22 @@
+[Unit]
+Description=IOTA node
+
+[Service]
+User={{ service_identifier }}
+WorkingDirectory={{ node_home_dir }}
+EnvironmentFile={{ node_environment_general_file_path }}
+ExecStart={{ node_bin_dir }}/{{ service_identifier }} --config-path {{ node_config_file_path }}
+Restart=always
+RestartSec=4
+LimitNOFILE=65536
+# Soft limit: kernel starts reclaiming/throttling the service above this
+MemoryHigh=15G
+# Hard limit: if exceeded, the OOM killer kills ONLY this service
+MemoryMax=24G
+# Stop it from escaping the limit by swapping
+MemorySwapMax=0
+StandardOutput=append:{{ node_log_file_path }}
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
