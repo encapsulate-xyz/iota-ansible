@@ -34,6 +34,7 @@ iota:
         metrics: 91
   ssfn:
     source_url: https://github.com/iotaledger/iota/releases/download
+    secret_source_url: https://files.iota.org/dev
     ports:
       admin_port: 1338
       p2p_port: 8094
